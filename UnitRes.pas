@@ -1,4 +1,4 @@
-unit UnitRes;
+п»їunit UnitRes;
 
 interface
 
@@ -14,13 +14,13 @@ type
   private
     function GetRect: TRect;
   public
-    ResType: TType;                                                             // Тип ресурса (Королева или Мишень)
-    ResCount: UInt32;                                                           // Количество ресурсов
-    Left, Top: Integer;                                                         // Координаты
-    Direct: UInt16;                                                             // Направление (0-360 градусов)
-    BodyWidth: UInt16;                                                          // Визуальная ширина объекта
-    PenWidth: UInt16;                                                           // Тощина ее стенки
-    LifeCount: UInt32;                                                          // Счетчик жизни
+    ResType: TType;                                                             // РўРёРї СЂРµСЃСѓСЂСЃР° (РљРѕСЂРѕР»РµРІР° РёР»Рё РњРёС€РµРЅСЊ)
+    ResCount: UInt32;                                                           // РљРѕР»РёС‡РµСЃС‚РІРѕ СЂРµСЃСѓСЂСЃРѕРІ
+    Left, Top: Integer;                                                         // РљРѕРѕСЂРґРёРЅР°С‚С‹
+    Direct: UInt16;                                                             // РќР°РїСЂР°РІР»РµРЅРёРµ (0-360 РіСЂР°РґСѓСЃРѕРІ)
+    BodyWidth: UInt16;                                                          // Р’РёР·СѓР°Р»СЊРЅР°СЏ С€РёСЂРёРЅР° РѕР±СЉРµРєС‚Р°
+    PenWidth: UInt16;                                                           // РўРѕС‰РёРЅР° РµРµ СЃС‚РµРЅРєРё
+    LifeCount: UInt32;                                                          // РЎС‡РµС‚С‡РёРє Р¶РёР·РЅРё
     procedure Move(Box: TPaintBox);
     procedure Paint(Canvas: TCanvas);
     procedure Touch(ResTouch: TRes); overload;
@@ -35,15 +35,15 @@ const
   CGlobalResource = 75000;
 
 var
-  GlobalResource: UInt32;                                                       // Глобальный счётчик ресурсов
-  CS: TCriticalSection;                                                         // для глобального счётчика
+  GlobalResource: UInt32;                                                       // Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ СЃС‡С‘С‚С‡РёРє СЂРµСЃСѓСЂСЃРѕРІ
+  CS: TCriticalSection;                                                         // РґР»СЏ РіР»РѕР±Р°Р»СЊРЅРѕРіРѕ СЃС‡С‘С‚С‡РёРєР°
 
 implementation
 
-function GetCountResource(Res: UInt32): UInt32;                                 // Получаем количество ресурсов, если оно доступно
+function GetCountResource(Res: UInt32): UInt32;                                 // РџРѕР»СѓС‡Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ СЂРµСЃСѓСЂСЃРѕРІ, РµСЃР»Рё РѕРЅРѕ РґРѕСЃС‚СѓРїРЅРѕ
 begin
-  CS.Enter;                                                                     // На самом деле этот метод работает плохо
-  try                                                                           // нужно придумать что-то другое
+  CS.Enter;                                                                     // РќР° СЃР°РјРѕРј РґРµР»Рµ СЌС‚РѕС‚ РјРµС‚РѕРґ СЂР°Р±РѕС‚Р°РµС‚ РїР»РѕС…Рѕ
+  try                                                                           // РЅСѓР¶РЅРѕ РїСЂРёРґСѓРјР°С‚СЊ С‡С‚Рѕ-С‚Рѕ РґСЂСѓРіРѕРµ
     if Res <= GlobalResource then
     begin
       Dec(GlobalResource, Res);
@@ -59,7 +59,7 @@ begin
   end;
 end;
 
-procedure IncGlobalResource(Cnt: UInt32 = 1);                                   // возвращаем ресурсы в глобальную переменную
+procedure IncGlobalResource(Cnt: UInt32 = 1);                                   // РІРѕР·РІСЂР°С‰Р°РµРј СЂРµСЃСѓСЂСЃС‹ РІ РіР»РѕР±Р°Р»СЊРЅСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ
 begin
   CS.Enter;
   try
@@ -71,23 +71,23 @@ end;
 
 { TRes }
 
-constructor TRes.Create(Box: TPaintBox);                                        // Создаём ресурс на нашем холсте
-begin                                                                           // по содержанию это может быть королева или еда
+constructor TRes.Create(Box: TPaintBox);                                        // РЎРѕР·РґР°С‘Рј СЂРµСЃСѓСЂСЃ РЅР° РЅР°С€РµРј С…РѕР»СЃС‚Рµ
+begin                                                                           // РїРѕ СЃРѕРґРµСЂР¶Р°РЅРёСЋ СЌС‚Рѕ РјРѕР¶РµС‚ Р±С‹С‚СЊ РєРѕСЂРѕР»РµРІР° РёР»Рё РµРґР°
   inherited Create;
-  Left := Random(Box.ClientWidth);                                              // в любом месте
+  Left := Random(Box.ClientWidth);                                              // РІ Р»СЋР±РѕРј РјРµСЃС‚Рµ
   Top := Random(Box.ClientHeight);                                              //
-  BodyWidth := Random(30) +5;                                                   // сначала такого размера, потом будут перерисовываться по содержанию
-  LifeCount := 0;                                                               // счётчик всей жизнедеятельности ресурса
+  BodyWidth := Random(30) +5;                                                   // СЃРЅР°С‡Р°Р»Р° С‚Р°РєРѕРіРѕ СЂР°Р·РјРµСЂР°, РїРѕС‚РѕРј Р±СѓРґСѓС‚ РїРµСЂРµСЂРёСЃРѕРІС‹РІР°С‚СЊСЃСЏ РїРѕ СЃРѕРґРµСЂР¶Р°РЅРёСЋ
+  LifeCount := 0;                                                               // СЃС‡С‘С‚С‡РёРє РІСЃРµР№ Р¶РёР·РЅРµРґРµСЏС‚РµР»СЊРЅРѕСЃС‚Рё СЂРµСЃСѓСЂСЃР°
   Direct := Random(360);
 end;
 
 destructor TRes.Destroy;
 begin
-  IncGlobalResource(ResCount);                                                  // вернем остаточную энергию миру
+  IncGlobalResource(ResCount);                                                  // РІРµСЂРЅРµРј РѕСЃС‚Р°С‚РѕС‡РЅСѓСЋ СЌРЅРµСЂРіРёСЋ РјРёСЂСѓ
   inherited Destroy;
 end;
 
-function TRes.GetRect: TRect;                                                   // получаем размеры тела ресурса
+function TRes.GetRect: TRect;                                                   // РїРѕР»СѓС‡Р°РµРј СЂР°Р·РјРµСЂС‹ С‚РµР»Р° СЂРµСЃСѓСЂСЃР°
 begin
   Result.Left := Left;
   Result.Top := Top;
@@ -95,29 +95,29 @@ begin
   Result.Bottom := Top + BodyWidth;
 end;
 
-procedure TRes.Move(Box: TPaintBox);                                            // шаг
+procedure TRes.Move(Box: TPaintBox);                                            // С€Р°Рі
 begin
   if ResType = tdKing then
   begin
-    Dec(ResCount);                                                              // если королева, с шагом уменьшаем ее жизнь
+    Dec(ResCount);                                                              // РµСЃР»Рё РєРѕСЂРѕР»РµРІР°, СЃ С€Р°РіРѕРј СѓРјРµРЅСЊС€Р°РµРј РµРµ Р¶РёР·РЅСЊ
     IncGlobalResource;
   end
   else
   begin
-    if ResCount < 15000 then                                                    // если ресурс набрался сил до 15000, то останавливаем накопление
+    if ResCount < 15000 then                                                    // РµСЃР»Рё СЂРµСЃСѓСЂСЃ РЅР°Р±СЂР°Р»СЃСЏ СЃРёР» РґРѕ 15000, С‚Рѕ РѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј РЅР°РєРѕРїР»РµРЅРёРµ
     begin
       if GetCountResource(1) > 0 then
         Inc(ResCount);
     end;
   end;
 
-  Inc(LifeCount);                                                               // увеличиваем счётчик жизни
-  Left := Left - Round(Cos(DegToRad(Direct +90)));                              // пересчитываем новые координаты ресурса (королевы)
-  Top := Top + Round(Sin(DegToRad(Direct -90)));                                // самое сложное было, не перепутать знаки
+  Inc(LifeCount);                                                               // СѓРІРµР»РёС‡РёРІР°РµРј СЃС‡С‘С‚С‡РёРє Р¶РёР·РЅРё
+  Left := Left - Round(Cos(DegToRad(Direct +90)));                              // РїРµСЂРµСЃС‡РёС‚С‹РІР°РµРј РЅРѕРІС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ СЂРµСЃСѓСЂСЃР° (РєРѕСЂРѕР»РµРІС‹)
+  Top := Top + Round(Sin(DegToRad(Direct -90)));                                // СЃР°РјРѕРµ СЃР»РѕР¶РЅРѕРµ Р±С‹Р»Рѕ, РЅРµ РїРµСЂРµРїСѓС‚Р°С‚СЊ Р·РЅР°РєРё
 
-  Direct := Direct - (Random(21) -10);                                          // немного меняем направление движения
+  Direct := Direct - (Random(21) -10);                                          // РЅРµРјРЅРѕРіРѕ РјРµРЅСЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ
 
-  if (Left <= 0) or (Top <= 0)                                                  // проверяем столкновение с границами холста
+  if (Left <= 0) or (Top <= 0)                                                  // РїСЂРѕРІРµСЂСЏРµРј СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РіСЂР°РЅРёС†Р°РјРё С…РѕР»СЃС‚Р°
       or (Left + BodyWidth >= Box.ClientWidth)
       or (Top + BodyWidth >= Box.ClientHeight) then
   begin
@@ -129,33 +129,33 @@ begin
       Left := Box.ClientWidth - BodyWidth;
     if Top + BodyWidth >= Box.ClientHeight then
       Top := Box.ClientHeight - BodyWidth;
-    Direct := Direct +Random(180);                                              // разворачиваемся на какой-нибудь угол
+    Direct := Direct +Random(180);                                              // СЂР°Р·РІРѕСЂР°С‡РёРІР°РµРјСЃСЏ РЅР° РєР°РєРѕР№-РЅРёР±СѓРґСЊ СѓРіРѕР»
   end;
 end;
 
-procedure TRes.Paint(Canvas: TCanvas);                                          // рисуем объеект
+procedure TRes.Paint(Canvas: TCanvas);                                          // СЂРёСЃСѓРµРј РѕР±СЉРµРµРєС‚
 const
-  Color: array[TType] of TColor = (clRed, clGreen, clSilver);                   // королева красная, мишень зеленая, остальное неважно
+  Color: array[TType] of TColor = (clRed, clGreen, clSilver);                   // РєРѕСЂРѕР»РµРІР° РєСЂР°СЃРЅР°СЏ, РјРёС€РµРЅСЊ Р·РµР»РµРЅР°СЏ, РѕСЃС‚Р°Р»СЊРЅРѕРµ РЅРµРІР°Р¶РЅРѕ
 begin
   with Canvas do
   begin
     Brush.Color := Color[ResType];
     Pen.Color := Color[ResType];
     Pen.Width := PenWidth;
-    BodyWidth := ResCount div 100;                                              // размер тела зависит от внутренних ресурсов
-    if BodyWidth > 30 then                                                      // если тело занимает больше 30 пикселей
-    begin                                                                       // остаемся в этих же пределах, но рисуем линию
-      Pen.Width := BodyWidth div 30;                                            // толщина полоски уже равна +30 пикс тела
-      BodyWidth := 30;                                                          // чем больше будет ресурсов, тем толще будет полоска (кратная 30)
+    BodyWidth := ResCount div 100;                                              // СЂР°Р·РјРµСЂ С‚РµР»Р° Р·Р°РІРёСЃРёС‚ РѕС‚ РІРЅСѓС‚СЂРµРЅРЅРёС… СЂРµСЃСѓСЂСЃРѕРІ
+    if BodyWidth > 30 then                                                      // РµСЃР»Рё С‚РµР»Рѕ Р·Р°РЅРёРјР°РµС‚ Р±РѕР»СЊС€Рµ 30 РїРёРєСЃРµР»РµР№
+    begin                                                                       // РѕСЃС‚Р°РµРјСЃСЏ РІ СЌС‚РёС… Р¶Рµ РїСЂРµРґРµР»Р°С…, РЅРѕ СЂРёСЃСѓРµРј Р»РёРЅРёСЋ
+      Pen.Width := BodyWidth div 30;                                            // С‚РѕР»С‰РёРЅР° РїРѕР»РѕСЃРєРё СѓР¶Рµ СЂР°РІРЅР° +30 РїРёРєСЃ С‚РµР»Р°
+      BodyWidth := 30;                                                          // С‡РµРј Р±РѕР»СЊС€Рµ Р±СѓРґРµС‚ СЂРµСЃСѓСЂСЃРѕРІ, С‚РµРј С‚РѕР»С‰Рµ Р±СѓРґРµС‚ РїРѕР»РѕСЃРєР° (РєСЂР°С‚РЅР°СЏ 30)
       Pen.Color := clBlack;
     end;
     Ellipse(Rect);
   end;
 end;
 
-procedure TRes.Touch(ResTouch: TRes);                                           // проверка на столкновение
+procedure TRes.Touch(ResTouch: TRes);                                           // РїСЂРѕРІРµСЂРєР° РЅР° СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ
 begin
-  //(Sqrt(Sqr(Rect.Left-ResTouch.Rect.Left)+                                    // соприкосновение с границами круга
+  //(Sqrt(Sqr(Rect.Left-ResTouch.Rect.Left)+                                    // СЃРѕРїСЂРёРєРѕСЃРЅРѕРІРµРЅРёРµ СЃ РіСЂР°РЅРёС†Р°РјРё РєСЂСѓРіР°
   //                         Sqr(Rect.Top-ResTouch.Rect.Top))<=20);             //
   //PtInCircle()
   //if IntersectRect(Rect, ResTouch.Rect) then
@@ -164,23 +164,23 @@ begin
     and (Top+BodyWidth > ResTouch.Top)
     and (Top < ResTouch.Top+ResTouch.BodyWidth) then
   begin
-    Direct := Direct + 180;                                                     // при соприкосновении разворачиваемся на 180
-    Left := Left - Round(4*Cos(DegToRad(Direct + 90)));                         // и делаем шаг в противоположную сторону
-    Top := Top + Round(4*Sin(DegToRad(Direct - 90)));                           // чтоб случайно объекты не залипли друг в друге
-    ResTouch.Direct := ResTouch.Direct + 180;                                   // встречный ресурс тоже разворачиваем
+    Direct := Direct + 180;                                                     // РїСЂРё СЃРѕРїСЂРёРєРѕСЃРЅРѕРІРµРЅРёРё СЂР°Р·РІРѕСЂР°С‡РёРІР°РµРјСЃСЏ РЅР° 180
+    Left := Left - Round(4*Cos(DegToRad(Direct + 90)));                         // Рё РґРµР»Р°РµРј С€Р°Рі РІ РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅСѓСЋ СЃС‚РѕСЂРѕРЅСѓ
+    Top := Top + Round(4*Sin(DegToRad(Direct - 90)));                           // С‡С‚РѕР± СЃР»СѓС‡Р°Р№РЅРѕ РѕР±СЉРµРєС‚С‹ РЅРµ Р·Р°Р»РёРїР»Рё РґСЂСѓРі РІ РґСЂСѓРіРµ
+    ResTouch.Direct := ResTouch.Direct + 180;                                   // РІСЃС‚СЂРµС‡РЅС‹Р№ СЂРµСЃСѓСЂСЃ С‚РѕР¶Рµ СЂР°Р·РІРѕСЂР°С‡РёРІР°РµРј
   end;
 end;
 
-procedure TRes.Touch(ResList: TList<TRes>; Index: Integer);                     // проверка на столкновение
+procedure TRes.Touch(ResList: TList<TRes>; Index: Integer);                     // РїСЂРѕРІРµСЂРєР° РЅР° СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ
 var
   i: Integer;
 begin
   i := Index;
 
-  {TParallel.For(Index, Pred(ResList.Count),                                    // параллельное вычисление хромает, не используем его
+  {TParallel.For(Index, Pred(ResList.Count),                                    // РїР°СЂР°Р»Р»РµР»СЊРЅРѕРµ РІС‹С‡РёСЃР»РµРЅРёРµ С…СЂРѕРјР°РµС‚, РЅРµ РёСЃРїРѕР»СЊР·СѓРµРј РµРіРѕ
     procedure(i: integer; loopState: TParallel.TLoopState)
     begin
-      //Touch(ResList[i]);                                                        // проверим не соприкоснулся ли наш ресурс с другими себе подобными?
+      //Touch(ResList[i]);                                                        // РїСЂРѕРІРµСЂРёРј РЅРµ СЃРѕРїСЂРёРєРѕСЃРЅСѓР»СЃСЏ Р»Рё РЅР°С€ СЂРµСЃСѓСЂСЃ СЃ РґСЂСѓРіРёРјРё СЃРµР±Рµ РїРѕРґРѕР±РЅС‹РјРё?
       if (Left+BodyWidth > TRes(ResList[i]).Left) and (Left < TRes(ResList[i]).Left+TRes(ResList[i]).BodyWidth)
         and (Top+BodyWidth > TRes(ResList[i]).Top) and (Top < TRes(ResList[i]).Top+TRes(ResList[i]).BodyWidth) then
       begin
@@ -199,7 +199,7 @@ begin
 
   while i < ResList.Count do
   begin
-    Touch(ResList[i]);                                                          // проверим не соприкоснулся ли наш ресурс с другими себе подобными?
+    Touch(ResList[i]);                                                          // РїСЂРѕРІРµСЂРёРј РЅРµ СЃРѕРїСЂРёРєРѕСЃРЅСѓР»СЃСЏ Р»Рё РЅР°С€ СЂРµСЃСѓСЂСЃ СЃ РґСЂСѓРіРёРјРё СЃРµР±Рµ РїРѕРґРѕР±РЅС‹РјРё?
     Inc(i);
   end;
 end;

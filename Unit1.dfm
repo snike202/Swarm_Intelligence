@@ -86,7 +86,6 @@ object Form1: TForm1
     TabOrder = 0
     Visible = False
     OnClick = Button1Click
-    ExplicitLeft = 662
   end
   object Button2: TButton
     Left = 744
@@ -97,7 +96,6 @@ object Form1: TForm1
     Caption = #1059#1076#1072#1083#1080#1090#1100' '#1074#1089#1077#1093
     TabOrder = 1
     OnClick = Button2Click
-    ExplicitLeft = 734
   end
   object GroupBox1: TGroupBox
     Left = 672
@@ -107,7 +105,6 @@ object Form1: TForm1
     Anchors = [akTop, akRight]
     Caption = '  '#1041#1086#1090#1099'  '
     TabOrder = 2
-    ExplicitLeft = 651
     object Label2: TLabel
       Left = 10
       Top = 20
@@ -153,7 +150,6 @@ object Form1: TForm1
     Anchors = [akTop, akRight]
     Caption = '  '#1056#1077#1089#1091#1088#1089#1099'  '
     TabOrder = 3
-    ExplicitLeft = 651
     object Label4: TLabel
       Left = 14
       Top = 24
@@ -181,8 +177,6 @@ object Form1: TForm1
     Caption = #1053#1077' '#1087#1086#1082#1072#1079#1099#1074#1072#1090#1100
     TabOrder = 4
     OnClick = chb_paintClick
-    ExplicitLeft = 667
-    ExplicitTop = 595
   end
   object Memo1: TMemo
     Left = 672

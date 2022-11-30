@@ -1,4 +1,4 @@
-unit Unit1;
+п»їunit Unit1;
 
 interface
 
@@ -55,8 +55,8 @@ type
 var
   Form1: TForm1;
 
-  BotList: TList<TBot>;                                                         // Список Роя
-  ResList: TList<TRes>;                                                         // Список всех ресурсов
+  BotList: TList<TBot>;                                                         // РЎРїРёСЃРѕРє Р РѕСЏ
+  ResList: TList<TRes>;                                                         // РЎРїРёСЃРѕРє РІСЃРµС… СЂРµСЃСѓСЂСЃРѕРІ
 
   CountKing: UInt16;
   CountBot: UInt16;
@@ -200,7 +200,7 @@ end;
 
 procedure TForm1.FormResize(Sender: TObject);
 begin
-  //cnt_bot := PaintBox1.ClientWidth div se_radius.Value;                         // посчитаем сколько ботов хватит для этой карты
+  //cnt_bot := PaintBox1.ClientWidth div se_radius.Value;                         // РїРѕСЃС‡РёС‚Р°РµРј СЃРєРѕР»СЊРєРѕ Р±РѕС‚РѕРІ С…РІР°С‚РёС‚ РґР»СЏ СЌС‚РѕР№ РєР°СЂС‚С‹
   //cnt_bot := cnt_bot * (PaintBox1.ClientHeight div se_radius.Value);
   //cnt_bot := cnt_bot * 20;
   cnt_bot := 3000;
@@ -218,13 +218,13 @@ begin
     begin
       if i > BotList.Count then
         loopState.Break;
-      BotList[i].Paint(bm.Canvas);                                              // прорисуем бота на холсте
+      BotList[i].Paint(bm.Canvas);                                              // РїСЂРѕСЂРёСЃСѓРµРј Р±РѕС‚Р° РЅР° С…РѕР»СЃС‚Рµ
     end
   ); }
   var i := 0;
   while i < BotList.Count do
   begin
-    BotList[i].Paint(bm.Canvas);                                                // прорисуем бота на холсте
+    BotList[i].Paint(bm.Canvas);                                                // РїСЂРѕСЂРёСЃСѓРµРј Р±РѕС‚Р° РЅР° С…РѕР»СЃС‚Рµ
     Inc(i);
   end;
 end;
@@ -236,15 +236,15 @@ begin
   begin
     with ResList[i] do
     begin
-      Paint(bm.Canvas);                                                         // прорисуем бота на холсте
-      if ResType = tdKing then                                                  // если это королева, то нарисуем направление движения
+      Paint(bm.Canvas);                                                         // РїСЂРѕСЂРёСЃСѓРµРј Р±РѕС‚Р° РЅР° С…РѕР»СЃС‚Рµ
+      if ResType = tdKing then                                                  // РµСЃР»Рё СЌС‚Рѕ РєРѕСЂРѕР»РµРІР°, С‚Рѕ РЅР°СЂРёСЃСѓРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ
       begin
         bm.Canvas.Pen.Width := 1;
         bm.Canvas.Pen.Color := clGray;
-        var x := Left + BodyWidth shr 1; // div 2                               // вычисляем середину королевы
+        var x := Left + BodyWidth shr 1; // div 2                               // РІС‹С‡РёСЃР»СЏРµРј СЃРµСЂРµРґРёРЅСѓ РєРѕСЂРѕР»РµРІС‹
         var y := Top + BodyWidth shr 1; // div 2
         bm.Canvas.MoveTo(x, y);
-        x := x - Round((BodyWidth shr 1) * Cos(DegToRad(Direct + 90)));         // вычисляем направление движения
+        x := x - Round((BodyWidth shr 1) * Cos(DegToRad(Direct + 90)));         // РІС‹С‡РёСЃР»СЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ
         y := y + Round((BodyWidth shr 1) * Sin(DegToRad(Direct - 90)));
         bm.Canvas.LineTo(x, y);
       end;
@@ -256,7 +256,7 @@ end;
 procedure TForm1.PaintBox1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 const
-  RType: array[TType] of String = ('Королева', 'Ресурс', '');
+  RType: array[TType] of String = ('РљРѕСЂРѕР»РµРІР°', 'Р РµСЃСѓСЂСЃ', '');
 begin
   var i := 0;
   while i < ResList.Count do
@@ -268,8 +268,8 @@ begin
       begin
         ShowMessage(
           RType[ResType] + #13
-          + 'Количество ресурсов: ' + ResCount.ToString + #13
-          + 'Длительность жизни: '+ LifeCount.ToString
+          + 'РљРѕР»РёС‡РµСЃС‚РІРѕ СЂРµСЃСѓСЂСЃРѕРІ: ' + ResCount.ToString + #13
+          + 'Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ Р¶РёР·РЅРё: '+ LifeCount.ToString
           + '/' + Label7.Tag.ToString);
         Break;
       end;
@@ -294,7 +294,7 @@ begin
     BotsPaint(bm);
     ResPaint(bm);
 
-    PaintBox1.Canvas.Draw(0, 0, bm);                                            // выводим холст на экран, поискать более быструю замену
+    PaintBox1.Canvas.Draw(0, 0, bm);                                            // РІС‹РІРѕРґРёРј С…РѕР»СЃС‚ РЅР° СЌРєСЂР°РЅ, РїРѕРёСЃРєР°С‚СЊ Р±РѕР»РµРµ Р±С‹СЃС‚СЂСѓСЋ Р·Р°РјРµРЅСѓ
   finally
     bm.Free;
   end;
@@ -303,7 +303,7 @@ end;
 procedure TForm1.ResStep;
 begin
   var i := 0;
-  CountKing := 0;                                                               // будем считать королев, обнулимся
+  CountKing := 0;                                                               // Р±СѓРґРµРј СЃС‡РёС‚Р°С‚СЊ РєРѕСЂРѕР»РµРІ, РѕР±РЅСѓР»РёРјСЃСЏ
   //TParallel.For(0, Pred(ResList.Count),
   while i < ResList.Count do
   //procedure (i: Integer; loopState: TParallel.TLoopState)
@@ -312,7 +312,7 @@ begin
     //  loopState.Break;
 
     var Res := ResList[i];
-    if Res.BodyWidth <= 3 then                                                  // если ресурс был съеден, уничтожаем его
+    if Res.BodyWidth <= 3 then                                                  // РµСЃР»Рё СЂРµСЃСѓСЂСЃ Р±С‹Р» СЃСЉРµРґРµРЅ, СѓРЅРёС‡С‚РѕР¶Р°РµРј РµРіРѕ
     begin
       Res.Destroy;
       //TThread.Queue(TThread.CurrentThread, procedure
@@ -330,39 +330,39 @@ begin
     //var Res := ResList[i];
     //TThread.Queue(TThread.CurrentThread, procedure
     //begin
-    Res.Move(PaintBox1);                                                        // делаем шаг ресурсом (и королевой)
+    Res.Move(PaintBox1);                                                        // РґРµР»Р°РµРј С€Р°Рі СЂРµСЃСѓСЂСЃРѕРј (Рё РєРѕСЂРѕР»РµРІРѕР№)
     //end);
 
-    if Res.ResType = tdKing then                                                // если это не ресурс, а королева
+    if Res.ResType = tdKing then                                                // РµСЃР»Рё СЌС‚Рѕ РЅРµ СЂРµСЃСѓСЂСЃ, Р° РєРѕСЂРѕР»РµРІР°
     begin
-      Inc(CountKing);                                                           // сразу считаем сколько у нас королев
+      Inc(CountKing);                                                           // СЃСЂР°Р·Сѓ СЃС‡РёС‚Р°РµРј СЃРєРѕР»СЊРєРѕ Сѓ РЅР°СЃ РєРѕСЂРѕР»РµРІ
       //TInterlocked.Increment(CountKing);
-      if Res.ResCount > 1500 then                                               // если ресурсов у королевы достаточно
-        if cnt_bot > CountBot {BotList.Count} then                              // а ботов меньше чем желательно для этой карты
+      if Res.ResCount > 1500 then                                               // РµСЃР»Рё СЂРµСЃСѓСЂСЃРѕРІ Сѓ РєРѕСЂРѕР»РµРІС‹ РґРѕСЃС‚Р°С‚РѕС‡РЅРѕ
+        if cnt_bot > CountBot {BotList.Count} then                              // Р° Р±РѕС‚РѕРІ РјРµРЅСЊС€Рµ С‡РµРј Р¶РµР»Р°С‚РµР»СЊРЅРѕ РґР»СЏ СЌС‚РѕР№ РєР°СЂС‚С‹
         begin
-          var Bot := TBot.Create(PaintBox1, se_life.Value);                     // создаем нового бота
+          var Bot := TBot.Create(PaintBox1, se_life.Value);                     // СЃРѕР·РґР°РµРј РЅРѕРІРѕРіРѕ Р±РѕС‚Р°
           Bot.NotifyRadius := se_radius.Value;
-          Bot.Left := Res.Left + (Res.BodyWidth shr 1);                         // внутри нашей королевы
+          Bot.Left := Res.Left + (Res.BodyWidth shr 1);                         // РІРЅСѓС‚СЂРё РЅР°С€РµР№ РєРѕСЂРѕР»РµРІС‹
           Bot.Top := Res.Top + (Res.BodyWidth shr 1);
-          Bot.Direct := Res.Direct;                                             // с направлением движения тоже как у королевы
-          Bot.Target := tdRes;                                                  // сразу сообщаем боту, чтоб искал он Ресурс
-          Bot.DistanceKing := 0;                                                // текущий шаг (координата) до королевы
-          Bot.DistanceRes := 2048;                                              // дистанция до ресурса не известна, ставим специально завшенную
-          Bot.Speed := 10;                                                      // и повышенную скорость движения
-          // сразу вычисляем первый шаг бота, чтобы верно определить направление движения
+          Bot.Direct := Res.Direct;                                             // СЃ РЅР°РїСЂР°РІР»РµРЅРёРµРј РґРІРёР¶РµРЅРёСЏ С‚РѕР¶Рµ РєР°Рє Сѓ РєРѕСЂРѕР»РµРІС‹
+          Bot.Target := tdRes;                                                  // СЃСЂР°Р·Сѓ СЃРѕРѕР±С‰Р°РµРј Р±РѕС‚Сѓ, С‡С‚РѕР± РёСЃРєР°Р» РѕРЅ Р РµСЃСѓСЂСЃ
+          Bot.DistanceKing := 0;                                                // С‚РµРєСѓС‰РёР№ С€Р°Рі (РєРѕРѕСЂРґРёРЅР°С‚Р°) РґРѕ РєРѕСЂРѕР»РµРІС‹
+          Bot.DistanceRes := 2048;                                              // РґРёСЃС‚Р°РЅС†РёСЏ РґРѕ СЂРµСЃСѓСЂСЃР° РЅРµ РёР·РІРµСЃС‚РЅР°, СЃС‚Р°РІРёРј СЃРїРµС†РёР°Р»СЊРЅРѕ Р·Р°РІС€РµРЅРЅСѓСЋ
+          Bot.Speed := 10;                                                      // Рё РїРѕРІС‹С€РµРЅРЅСѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ РґРІРёР¶РµРЅРёСЏ
+          // СЃСЂР°Р·Сѓ РІС‹С‡РёСЃР»СЏРµРј РїРµСЂРІС‹Р№ С€Р°Рі Р±РѕС‚Р°, С‡С‚РѕР±С‹ РІРµСЂРЅРѕ РѕРїСЂРµРґРµР»РёС‚СЊ РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ
           Bot.Left := Bot.Left - Round(Res.BodyWidth shr 1 * Cos(DegToRad(Bot.Direct +90)));
           Bot.Top := Bot.Top + Round(Res.BodyWidth shr 1 * Sin(DegToRad(Bot.Direct -90)));
           //TThread.Queue(TThread.CurrentThread, procedure
           //begin
-          BotList.Add(Bot);                                                     // добавляем бота в коллекцию
-          Dec(Res.ResCount, 20);                                                // отнимаем у королевы стоимость одного бота
+          BotList.Add(Bot);                                                     // РґРѕР±Р°РІР»СЏРµРј Р±РѕС‚Р° РІ РєРѕР»Р»РµРєС†РёСЋ
+          Dec(Res.ResCount, 20);                                                // РѕС‚РЅРёРјР°РµРј Сѓ РєРѕСЂРѕР»РµРІС‹ СЃС‚РѕРёРјРѕСЃС‚СЊ РѕРґРЅРѕРіРѕ Р±РѕС‚Р°
           //end);
         end;
     end;
     //Res.Touch(ResList, Succ(i));
     //TThread.Queue(TThread.CurrentThread, procedure
     //begin
-    Res.Touch(ResList, Succ(i));                                                // проверим на соприкосновение
+    Res.Touch(ResList, Succ(i));                                                // РїСЂРѕРІРµСЂРёРј РЅР° СЃРѕРїСЂРёРєРѕСЃРЅРѕРІРµРЅРёРµ
     //end);
     Inc(i);
   end; // while i < ResList.Count
@@ -414,21 +414,21 @@ begin
 
     //TThread.Queue(TThread.CurrentThread, procedure
     //begin
-    Bot.Move(PaintBox1);                                                        // делаем шаг ботом (если жив)
+    Bot.Move(PaintBox1);                                                        // РґРµР»Р°РµРј С€Р°Рі Р±РѕС‚РѕРј (РµСЃР»Рё Р¶РёРІ)
     //end);
 
-    if Bot.Died then                                                            // если бот умер, удаляем запись о нем
+    if Bot.Died then                                                            // РµСЃР»Рё Р±РѕС‚ СѓРјРµСЂ, СѓРґР°Р»СЏРµРј Р·Р°РїРёСЃСЊ Рѕ РЅРµРј
     begin
       if Bot.Life < -500 then
       begin
-        if Random(5000) = 0 then                                                // при смерти бот может породить вместо себя королеву, шанс 1 к 5000
+        if Random(5000) = 0 then                                                // РїСЂРё СЃРјРµСЂС‚Рё Р±РѕС‚ РјРѕР¶РµС‚ РїРѕСЂРѕРґРёС‚СЊ РІРјРµСЃС‚Рѕ СЃРµР±СЏ РєРѕСЂРѕР»РµРІСѓ, С€Р°РЅСЃ 1 Рє 5000
         begin
           var Res2 := TRes.Create(PaintBox1);
           Res2.Left := Bot.Left;
           Res2.Top := Bot.Top;
           Res2.Direct := Bot.Direct;
           Res2.ResType := tdKing;
-          Res2.ResCount := GetCountResource(1500);                              // но это самая слабая королева, не умеет рожать
+          Res2.ResCount := GetCountResource(1500);                              // РЅРѕ СЌС‚Рѕ СЃР°РјР°СЏ СЃР»Р°Р±Р°СЏ РєРѕСЂРѕР»РµРІР°, РЅРµ СѓРјРµРµС‚ СЂРѕР¶Р°С‚СЊ
           //TThread.Queue(TThread.CurrentThread, procedure
           //begin
           ResList.Add(Res2);
@@ -452,7 +452,7 @@ begin
     while j < ResList.Count do
     begin
       var Res := ResList[j];
-      //if IntersectRect(Bot.Rect, Res.Rect) then                               // проверяем не столкнулись ли мы с объектом
+      //if IntersectRect(Bot.Rect, Res.Rect) then                               // РїСЂРѕРІРµСЂСЏРµРј РЅРµ СЃС‚РѕР»РєРЅСѓР»РёСЃСЊ Р»Рё РјС‹ СЃ РѕР±СЉРµРєС‚РѕРј
       if (Bot.Left+Bot.Width > Res.Left) and (Bot.Left < Res.Left+Res.BodyWidth)
           and (Bot.Top+Bot.Width > Res.Top) and (Bot.Top < Res.Top+Res.BodyWidth) then
         Bot.SetTarget(Res);
@@ -460,7 +460,7 @@ begin
     end;
     //TThread.Queue(TThread.CurrentThread, procedure
     //begin
-    Bot.Notify(BotList, Succ(i));                                               // кричим о состоянии своих счетчиков всем кто нас слышит
+    Bot.Notify(BotList, Succ(i));                                               // РєСЂРёС‡РёРј Рѕ СЃРѕСЃС‚РѕСЏРЅРёРё СЃРІРѕРёС… СЃС‡РµС‚С‡РёРєРѕРІ РІСЃРµРј РєС‚Рѕ РЅР°СЃ СЃР»С‹С€РёС‚
     //end);
     Inc(i);
   end;
@@ -474,10 +474,10 @@ begin
   BotStep;
 
   if CountKing <= 0  then
-  begin                                                                         // если вдруг вообще все королевы вымерли, создаем новую
+  begin                                                                         // РµСЃР»Рё РІРґСЂСѓРі РІРѕРѕР±С‰Рµ РІСЃРµ РєРѕСЂРѕР»РµРІС‹ РІС‹РјРµСЂР»Рё, СЃРѕР·РґР°РµРј РЅРѕРІСѓСЋ
     var Res := TRes.Create(PaintBox1);
     Res.ResType := tdKing;
-    Res.ResCount := GetCountResource(25000);                                    // первоначальная королева должна быть с 25000 ресурсами
+    Res.ResCount := GetCountResource(25000);                                    // РїРµСЂРІРѕРЅР°С‡Р°Р»СЊРЅР°СЏ РєРѕСЂРѕР»РµРІР° РґРѕР»Р¶РЅР° Р±С‹С‚СЊ СЃ 25000 СЂРµСЃСѓСЂСЃР°РјРё
     if Res.ResCount >= 1500 then
       ResList.Add(Res)
     else
@@ -488,7 +488,7 @@ begin
   begin
     var Res := TRes.Create(PaintBox1);
     Res.ResType := tdRes;
-    Res.ResCount := GetCountResource(Random(1500) + 1500);                      // возьмем оттуда до от 1500 до 3000
+    Res.ResCount := GetCountResource(Random(1500) + 1500);                      // РІРѕР·СЊРјРµРј РѕС‚С‚СѓРґР° РґРѕ РѕС‚ 1500 РґРѕ 3000
     if Res.ResCount >= 500 then
       ResList.Add(Res)
     else
@@ -497,7 +497,7 @@ begin
 
   if not chb_paint.Checked then
   begin
-    if TimerMove.Tag div 4 = 0 then                                             // рисуем кадр каждый 4 цикл
+    if TimerMove.Tag div 4 = 0 then                                             // СЂРёСЃСѓРµРј РєР°РґСЂ РєР°Р¶РґС‹Р№ 4 С†РёРєР»
     begin
       PaintBox1.Invalidate;
       TimerMove.Tag := 0;
@@ -505,14 +505,14 @@ begin
     TimerMove.Tag := TimerMove.Tag + 1;
   end;
 
-  Label1.Caption := 'Общие ресурсы: ' + GlobalResource.ToString;
-  Label5.Caption := 'Ботов: ' + CountBot.ToString
+  Label1.Caption := 'РћР±С‰РёРµ СЂРµСЃСѓСЂСЃС‹: ' + GlobalResource.ToString;
+  Label5.Caption := 'Р‘РѕС‚РѕРІ: ' + CountBot.ToString
                   + '/' + cnt_bot.ToString;
   var d_bot := BotList.Count - CountBot;
-  Label8.Caption := 'Мёртвых/ресурсов: ' + d_bot.ToString
+  Label8.Caption := 'РњС‘СЂС‚РІС‹С…/СЂРµСЃСѓСЂСЃРѕРІ: ' + d_bot.ToString
                   + '/' + IntToStr(d_bot*20);
-  Label6.Caption := 'Королев: ' + CountKing.ToString;
-  Label7.Caption := 'Цикл: ' + Label7.Tag.ToString;
+  Label6.Caption := 'РљРѕСЂРѕР»РµРІ: ' + CountKing.ToString;
+  Label7.Caption := 'Р¦РёРєР»: ' + Label7.Tag.ToString;
   Label7.Tag := Succ(Label7.Tag);
 
   TimerMove.Enabled := True;

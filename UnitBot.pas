@@ -1,4 +1,4 @@
-unit UnitBot;
+п»їunit UnitBot;
 
 interface
 
@@ -16,15 +16,15 @@ type
     function CheckDied: Boolean;
   public
     Left: Integer;
-    Top: Integer;                                                               // координаты букашки
-    Direct: UInt16;                                                             // направление движения
-    Speed: Byte;                                                                // скорость
-    Width: Integer;                                                             // ширина (и высота) объекта
-    NotifyRadius: Byte;                                                         // радиус Вещания
-    DistanceKing,                                                               // Примерные счетчики до каждого пунтка назначения
+    Top: Integer;                                                               // РєРѕРѕСЂРґРёРЅР°С‚С‹ Р±СѓРєР°С€РєРё
+    Direct: UInt16;                                                             // РЅР°РїСЂР°РІР»РµРЅРёРµ РґРІРёР¶РµРЅРёСЏ
+    Speed: Byte;                                                                // СЃРєРѕСЂРѕСЃС‚СЊ
+    Width: Integer;                                                             // С€РёСЂРёРЅР° (Рё РІС‹СЃРѕС‚Р°) РѕР±СЉРµРєС‚Р°
+    NotifyRadius: Byte;                                                         // СЂР°РґРёСѓСЃ Р’РµС‰Р°РЅРёСЏ
+    DistanceKing,                                                               // РџСЂРёРјРµСЂРЅС‹Рµ СЃС‡РµС‚С‡РёРєРё РґРѕ РєР°Р¶РґРѕРіРѕ РїСѓРЅС‚РєР° РЅР°Р·РЅР°С‡РµРЅРёСЏ
     DistanceRes: UInt16;                                                        //
-    Target: TType;                                                              // Цель
-    Life: Int32;                                                                // Количество жизней (может убегать в минус)
+    Target: TType;                                                              // Р¦РµР»СЊ
+    Life: Int32;                                                                // РљРѕР»РёС‡РµСЃС‚РІРѕ Р¶РёР·РЅРµР№ (РјРѕР¶РµС‚ СѓР±РµРіР°С‚СЊ РІ РјРёРЅСѓСЃ)
     procedure Move(Box: TPaintBox);
     procedure Paint(Canvas: TCanvas);
     function SetTarget(Res: TRes): Boolean;
@@ -38,24 +38,24 @@ implementation
 
 { TBot }
 
-function TBot.CheckDied: Boolean;                                               // проверяем жив ли бот
+function TBot.CheckDied: Boolean;                                               // РїСЂРѕРІРµСЂСЏРµРј Р¶РёРІ Р»Рё Р±РѕС‚
 begin
   Result := Life <= 0;
 end;
 
-function TBot.SetTarget(Res: TRes): Boolean;                                    // выставляем новую цель боту
+function TBot.SetTarget(Res: TRes): Boolean;                                    // РІС‹СЃС‚Р°РІР»СЏРµРј РЅРѕРІСѓСЋ С†РµР»СЊ Р±РѕС‚Сѓ
 begin
   Result := False;
-  if Target = Res.ResType then                                                  // если пункт назначения найден
+  if Target = Res.ResType then                                                  // РµСЃР»Рё РїСѓРЅРєС‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ РЅР°Р№РґРµРЅ
   begin
     if Res.ResType = tdKing then
     begin
       Inc(Res.ResCount);
       DistanceKing := 0;
-      Target := tdRes;                                                          // меняем цель поиска
-      //Res.Direct := Round((Res.Direct + (Вirect + 180)) shr 1); // shr 1 это быстрое деление на 2
-                                                                                // мы знаем куда направлена букашка (в нашу сторону)
-      Res.Direct := Direct + 180;                                               // поэтому разворачиваем королеву в сторону букашки используя ее направлкние
+      Target := tdRes;                                                          // РјРµРЅСЏРµРј С†РµР»СЊ РїРѕРёСЃРєР°
+      //Res.Direct := Round((Res.Direct + (Р’irect + 180)) shr 1); // shr 1 СЌС‚Рѕ Р±С‹СЃС‚СЂРѕРµ РґРµР»РµРЅРёРµ РЅР° 2
+                                                                                // РјС‹ Р·РЅР°РµРј РєСѓРґР° РЅР°РїСЂР°РІР»РµРЅР° Р±СѓРєР°С€РєР° (РІ РЅР°С€Сѓ СЃС‚РѕСЂРѕРЅСѓ)
+      Res.Direct := Direct + 180;                                               // РїРѕСЌС‚РѕРјСѓ СЂР°Р·РІРѕСЂР°С‡РёРІР°РµРј РєРѕСЂРѕР»РµРІСѓ РІ СЃС‚РѕСЂРѕРЅСѓ Р±СѓРєР°С€РєРё РёСЃРїРѕР»СЊР·СѓСЏ РµРµ РЅР°РїСЂР°РІР»РєРЅРёРµ
     end
     else
     if Res.ResType = tdRes then
@@ -64,10 +64,10 @@ begin
       begin
         Dec(Res.ResCount);
         DistanceRes := 0;
-        Target := tdKing;                                                       // меняем цель поиска
+        Target := tdKing;                                                       // РјРµРЅСЏРµРј С†РµР»СЊ РїРѕРёСЃРєР°
       end;
     end;
-    Speed := Random(8)+3;                                                       // задаем скорость от 3 до 11
+    Speed := Random(8)+3;                                                       // Р·Р°РґР°РµРј СЃРєРѕСЂРѕСЃС‚СЊ РѕС‚ 3 РґРѕ 11
   end
   else
   begin
@@ -77,8 +77,8 @@ begin
     if Res.ResType = tdRes then
       DistanceRes := 0;
   end;
-  Direct := Direct + 180;                                                       // меняем направление бота на 180 градусов
-  Life := DefaultLife;                                                          // Обнуляем жизнь
+  Direct := Direct + 180;                                                       // РјРµРЅСЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ Р±РѕС‚Р° РЅР° 180 РіСЂР°РґСѓСЃРѕРІ
+  Life := DefaultLife;                                                          // РћР±РЅСѓР»СЏРµРј Р¶РёР·РЅСЊ
 end;
 
 constructor TBot.Create(Box: TPaintBox; ALife: Integer);
@@ -86,21 +86,21 @@ begin
   inherited Create;
   Left := Random(Box.ClientWidth);
   Top := Random(Box.ClientHeight);
-  Width := 3;                                                                   // стандартная ширина бота 3 пикселя, выглядит как крестик
+  Width := 3;                                                                   // СЃС‚Р°РЅРґР°СЂС‚РЅР°СЏ С€РёСЂРёРЅР° Р±РѕС‚Р° 3 РїРёРєСЃРµР»СЏ, РІС‹РіР»СЏРґРёС‚ РєР°Рє РєСЂРµСЃС‚РёРє
   Speed := Random(8)+3;
-  Direct := Random(360);                                                        // направление любое
+  Direct := Random(360);                                                        // РЅР°РїСЂР°РІР»РµРЅРёРµ Р»СЋР±РѕРµ
   DefaultLife := ALife;
   Life := ALife;
-  Target := tdRes;                                                              // цель - ресурс (еда)
+  Target := tdRes;                                                              // С†РµР»СЊ - СЂРµСЃСѓСЂСЃ (РµРґР°)
 end;
 
 destructor TBot.Destroy;
 begin
-  IncGlobalResource(20);                                                        // каждый бот стоит 20 едениц, вернем эту энергию
+  IncGlobalResource(20);                                                        // РєР°Р¶РґС‹Р№ Р±РѕС‚ СЃС‚РѕРёС‚ 20 РµРґРµРЅРёС†, РІРµСЂРЅРµРј СЌС‚Сѓ СЌРЅРµСЂРіРёСЋ
   inherited Destroy;
 end;
 
-function TBot.GetRect: TRect;                                                   // показываем размеры тела
+function TBot.GetRect: TRect;                                                   // РїРѕРєР°Р·С‹РІР°РµРј СЂР°Р·РјРµСЂС‹ С‚РµР»Р°
 begin
   Result.Left := Left;
   Result.Top := Top;
@@ -108,29 +108,29 @@ begin
   Result.Bottom := Top + Width;
 end;
 
-procedure TBot.Move(Box: TPaintBox);                                            // шаг
+procedure TBot.Move(Box: TPaintBox);                                            // С€Р°Рі
 begin
   if (Target = tdRes) or (Target = tdNone) then
-    Dec(Life);                                                                  // если бот ищет ресурс, он стареет, с ресурсом он вечный
+    Dec(Life);                                                                  // РµСЃР»Рё Р±РѕС‚ РёС‰РµС‚ СЂРµСЃСѓСЂСЃ, РѕРЅ СЃС‚Р°СЂРµРµС‚, СЃ СЂРµСЃСѓСЂСЃРѕРј РѕРЅ РІРµС‡РЅС‹Р№
 
-  if Life <= 0 then                                                             // если жизнь на нуле или ниже, двигаться не можем
+  if Life <= 0 then                                                             // РµСЃР»Рё Р¶РёР·РЅСЊ РЅР° РЅСѓР»Рµ РёР»Рё РЅРёР¶Рµ, РґРІРёРіР°С‚СЊСЃСЏ РЅРµ РјРѕР¶РµРј
   begin
-    Target := tdNone;                                                           // цели больше нет, мы мертвы
+    Target := tdNone;                                                           // С†РµР»Рё Р±РѕР»СЊС€Рµ РЅРµС‚, РјС‹ РјРµСЂС‚РІС‹
     Exit;
   end;
 
-  if Life <= (DefaultLife shr 1) then                                           // когда жизни осталось меньше половины
-    Speed := 15;                                                                // быстрее двигаемся в поисках цели
+  if Life <= (DefaultLife shr 1) then                                           // РєРѕРіРґР° Р¶РёР·РЅРё РѕСЃС‚Р°Р»РѕСЃСЊ РјРµРЅСЊС€Рµ РїРѕР»РѕРІРёРЅС‹
+    Speed := 15;                                                                // Р±С‹СЃС‚СЂРµРµ РґРІРёРіР°РµРјСЃСЏ РІ РїРѕРёСЃРєР°С… С†РµР»Рё
 
-  Left := Left - Round(Speed * Cos(DegToRad(Direct + 90)));                     // пересчитываем новые координаты бота
+  Left := Left - Round(Speed * Cos(DegToRad(Direct + 90)));                     // РїРµСЂРµСЃС‡РёС‚С‹РІР°РµРј РЅРѕРІС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹ Р±РѕС‚Р°
   Top := Top + Round(Speed * Sin(DegToRad(Direct - 90)));                       //
 
-  Inc(DistanceKing, 1);                                                         // увеличиваем счётчики до всех пунктов назначения
+  Inc(DistanceKing, 1);                                                         // СѓРІРµР»РёС‡РёРІР°РµРј СЃС‡С‘С‚С‡РёРєРё РґРѕ РІСЃРµС… РїСѓРЅРєС‚РѕРІ РЅР°Р·РЅР°С‡РµРЅРёСЏ
   Inc(DistanceRes, 1);                                                          //
 
-  Direct := Direct - (Random(11)-5);                                            // немного меняем направление (эффект шатающегося бота)
+  Direct := Direct - (Random(11)-5);                                            // РЅРµРјРЅРѕРіРѕ РјРµРЅСЏРµРј РЅР°РїСЂР°РІР»РµРЅРёРµ (СЌС„С„РµРєС‚ С€Р°С‚Р°СЋС‰РµРіРѕСЃСЏ Р±РѕС‚Р°)
 
-  if (Left <= 0)                                                                // проверяем столкновение с границами холста
+  if (Left <= 0)                                                                // РїСЂРѕРІРµСЂСЏРµРј СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ СЃ РіСЂР°РЅРёС†Р°РјРё С…РѕР»СЃС‚Р°
     or (Top <= 0)
     or (Left + Width >= Box.ClientWidth)
     or (Top + Width >= Box.ClientHeight) then
@@ -143,18 +143,18 @@ begin
       Left := Box.ClientWidth - Width;
     if Top + Width >= Box.ClientHeight then
       Top := Box.ClientHeight - Width;
-    Direct := Direct + Random(180);                                             // разворачиваемся на какой-нибудь угол
+    Direct := Direct + Random(180);                                             // СЂР°Р·РІРѕСЂР°С‡РёРІР°РµРјСЃСЏ РЅР° РєР°РєРѕР№-РЅРёР±СѓРґСЊ СѓРіРѕР»
   end;
 end;
 
-procedure TBot.Notify(BotList: TList<TBot>; Index: Integer);                    // оповестим всех кто входит в границы видимости
+procedure TBot.Notify(BotList: TList<TBot>; Index: Integer);                    // РѕРїРѕРІРµСЃС‚РёРј РІСЃРµС… РєС‚Рѕ РІС…РѕРґРёС‚ РІ РіСЂР°РЅРёС†С‹ РІРёРґРёРјРѕСЃС‚Рё
 var
   i: Integer;
 begin
   i := Index;
   while i < BotList.Count do
   begin
-    Notify(BotList[i]);                                                         // проверим не соприкоснулся ли наш ресурс с другими себе подобными?
+    Notify(BotList[i]);                                                         // РїСЂРѕРІРµСЂРёРј РЅРµ СЃРѕРїСЂРёРєРѕСЃРЅСѓР»СЃСЏ Р»Рё РЅР°С€ СЂРµСЃСѓСЂСЃ СЃ РґСЂСѓРіРёРјРё СЃРµР±Рµ РїРѕРґРѕР±РЅС‹РјРё?
     Inc(i);
   end;
 end;
@@ -163,36 +163,36 @@ procedure TBot.Notify(BotNotify: TBot);
 begin
 
   if BotNotify.Died or Died then
-    Exit;                                                                       // если слушатель или оратор мертвы, выходим
+    Exit;                                                                       // РµСЃР»Рё СЃР»СѓС€Р°С‚РµР»СЊ РёР»Рё РѕСЂР°С‚РѕСЂ РјРµСЂС‚РІС‹, РІС‹С…РѕРґРёРј
 
-  if (Left - NotifyRadius < BotNotify.Left)                                     // если бот в диапазоне слышимости
-    and (Left + Width + NotifyRadius > BotNotify.Left)                          // очень плохой механизм проверки, очень медленный
-    and (Top - NotifyRadius < BotNotify.Top)                                    // нужно попробовать как-то ускорить, но похоже условному переходу
-    and (Top + Width + NotifyRadius > BotNotify.Top) then                       // не нравится когда используются операторы > < >= <=
+  if (Left - NotifyRadius < BotNotify.Left)                                     // РµСЃР»Рё Р±РѕС‚ РІ РґРёР°РїР°Р·РѕРЅРµ СЃР»С‹С€РёРјРѕСЃС‚Рё
+    and (Left + Width + NotifyRadius > BotNotify.Left)                          // РѕС‡РµРЅСЊ РїР»РѕС…РѕР№ РјРµС…Р°РЅРёР·Рј РїСЂРѕРІРµСЂРєРё, РѕС‡РµРЅСЊ РјРµРґР»РµРЅРЅС‹Р№
+    and (Top - NotifyRadius < BotNotify.Top)                                    // РЅСѓР¶РЅРѕ РїРѕРїСЂРѕР±РѕРІР°С‚СЊ РєР°Рє-С‚Рѕ СѓСЃРєРѕСЂРёС‚СЊ, РЅРѕ РїРѕС…РѕР¶Рµ СѓСЃР»РѕРІРЅРѕРјСѓ РїРµСЂРµС…РѕРґСѓ
+    and (Top + Width + NotifyRadius > BotNotify.Top) then                       // РЅРµ РЅСЂР°РІРёС‚СЃСЏ РєРѕРіРґР° РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РѕРїРµСЂР°С‚РѕСЂС‹ > < >= <=
   begin
 
-    if BotNotify.DistanceKing > DistanceKing + NotifyRadius then                // если у кричащего дистанция к цели меньше
+    if BotNotify.DistanceKing > DistanceKing + NotifyRadius then                // РµСЃР»Рё Сѓ РєСЂРёС‡Р°С‰РµРіРѕ РґРёСЃС‚Р°РЅС†РёСЏ Рє С†РµР»Рё РјРµРЅСЊС€Рµ
     begin
       BotNotify.DistanceKing := DistanceKing + NotifyRadius;
       if BotNotify.Target = tdKing then
-        BotNotify.Direct := Round(RadToDeg(ArcTan2(Top-BotNotify.Top, Left-BotNotify.Left)) +90); // (то повернем в его сторону)
+        BotNotify.Direct := Round(RadToDeg(ArcTan2(Top-BotNotify.Top, Left-BotNotify.Left)) +90); // (С‚Рѕ РїРѕРІРµСЂРЅРµРј РІ РµРіРѕ СЃС‚РѕСЂРѕРЅСѓ)
     end
     else
-    if BotNotify.DistanceKing + BotNotify.NotifyRadius < DistanceKing then      // если же наоборот услышавший отвечает новыми координатами
+    if BotNotify.DistanceKing + BotNotify.NotifyRadius < DistanceKing then      // РµСЃР»Рё Р¶Рµ РЅР°РѕР±РѕСЂРѕС‚ СѓСЃР»С‹С€Р°РІС€РёР№ РѕС‚РІРµС‡Р°РµС‚ РЅРѕРІС‹РјРё РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё
     begin
       DistanceKing := BotNotify.DistanceKing + BotNotify.NotifyRadius;
       if Target = tdKing then
         Direct := Round(RadToDeg(ArcTan2(BotNotify.Top-Top, BotNotify.Left-Left)) +90);
     end;
 
-    if BotNotify.DistanceRes > DistanceRes + NotifyRadius then                  // если у кричащего дистанция к цели меньше
+    if BotNotify.DistanceRes > DistanceRes + NotifyRadius then                  // РµСЃР»Рё Сѓ РєСЂРёС‡Р°С‰РµРіРѕ РґРёСЃС‚Р°РЅС†РёСЏ Рє С†РµР»Рё РјРµРЅСЊС€Рµ
     begin
       BotNotify.DistanceRes := DistanceRes + NotifyRadius;
       if BotNotify.Target = tdRes then
         BotNotify.Direct := Round(RadToDeg(ArcTan2(Top-BotNotify.Top, Left-BotNotify.Left)) +90);
     end
     else
-    if BotNotify.DistanceRes + BotNotify.NotifyRadius < DistanceRes then        // если же наоборот услышавший отвечает новыми координатами
+    if BotNotify.DistanceRes + BotNotify.NotifyRadius < DistanceRes then        // РµСЃР»Рё Р¶Рµ РЅР°РѕР±РѕСЂРѕС‚ СѓСЃР»С‹С€Р°РІС€РёР№ РѕС‚РІРµС‡Р°РµС‚ РЅРѕРІС‹РјРё РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё
     begin
       DistanceRes := BotNotify.DistanceRes + BotNotify.NotifyRadius;
       if Target = tdRes then
@@ -201,9 +201,9 @@ begin
   end;
 end;
 
-procedure TBot.Paint(Canvas: TCanvas);                                          // нарисуем бота
+procedure TBot.Paint(Canvas: TCanvas);                                          // РЅР°СЂРёСЃСѓРµРј Р±РѕС‚Р°
 const
-  Color: array[TType] of TColor = (clGreen, clRed, clSilver);                   // от королевы бежит серый, от мишени зеленый
+  Color: array[TType] of TColor = (clGreen, clRed, clSilver);                   // РѕС‚ РєРѕСЂРѕР»РµРІС‹ Р±РµР¶РёС‚ СЃРµСЂС‹Р№, РѕС‚ РјРёС€РµРЅРё Р·РµР»РµРЅС‹Р№
 begin
   with Canvas do
   begin
