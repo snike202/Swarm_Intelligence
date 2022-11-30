@@ -16,7 +16,7 @@
 - После смерти бота есть шанс 1/5000 что родится королева
 
 В результате между едой и королевой создается толстая линия связи из ботов
-![](https://github.com/snike202/Swarm_Intelligence/images/1.png) 
+![](https://github.com/snike202/Swarm_Intelligence/blob/main/images/1.png) 
 
 Интересные поведения, когда еда заканчивается, а ботов на еду налетело слишком много, происходит взрывообразное разбрасывание ботов в стороны, выглядит как ударная волна
-![](https://github.com/snike202/Swarm_Intelligence/images/2.png) 
+![](https://github.com/snike202/Swarm_Intelligence/blob/main/images/2.png) 
