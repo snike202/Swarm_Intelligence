@@ -76,17 +76,6 @@ object Form1: TForm1
     Anchors = [akTop, akRight]
     Caption = #1052#1105#1088#1090#1074#1099#1093'/'#1088#1077#1089#1091#1088#1089#1086#1074': 0/0'
   end
-  object Button1: TButton
-    Left = 672
-    Top = 188
-    Width = 66
-    Height = 25
-    Anchors = [akTop, akRight]
-    Caption = '+'
-    TabOrder = 0
-    Visible = False
-    OnClick = Button1Click
-  end
   object Button2: TButton
     Left = 744
     Top = 188
@@ -94,7 +83,7 @@ object Form1: TForm1
     Height = 25
     Anchors = [akTop, akRight]
     Caption = #1059#1076#1072#1083#1080#1090#1100' '#1074#1089#1077#1093
-    TabOrder = 1
+    TabOrder = 0
     OnClick = Button2Click
   end
   object GroupBox1: TGroupBox
@@ -104,7 +93,7 @@ object Form1: TForm1
     Height = 85
     Anchors = [akTop, akRight]
     Caption = '  '#1041#1086#1090#1099'  '
-    TabOrder = 2
+    TabOrder = 1
     object Label2: TLabel
       Left = 10
       Top = 20
@@ -149,7 +138,7 @@ object Form1: TForm1
     Height = 84
     Anchors = [akTop, akRight]
     Caption = '  '#1056#1077#1089#1091#1088#1089#1099'  '
-    TabOrder = 3
+    TabOrder = 2
     object Label4: TLabel
       Left = 14
       Top = 24
@@ -175,7 +164,7 @@ object Form1: TForm1
     Height = 17
     Anchors = [akRight, akBottom]
     Caption = #1053#1077' '#1087#1086#1082#1072#1079#1099#1074#1072#1090#1100
-    TabOrder = 4
+    TabOrder = 3
     OnClick = chb_paintClick
   end
   object Memo1: TMemo
@@ -207,7 +196,7 @@ object Form1: TForm1
       '- '#1055#1088#1080' '#1089#1084#1077#1088#1090#1080' '#1073#1086#1090#1072' '#1096#1072#1085#1089' 1 '#1080#1079' '
       '5000 '#1095#1090#1086' '#1088#1086#1076#1080#1090#1089#1103' '#1082#1086#1088#1086#1083#1077#1074#1072)
     ReadOnly = True
-    TabOrder = 5
+    TabOrder = 4
   end
   object TimerMove: TTimer
     Enabled = False

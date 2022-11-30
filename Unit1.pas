@@ -12,7 +12,6 @@ uses
 
 type
   TForm1 = class(TForm)
-    Button1: TButton;
     Button2: TButton;
     Label1: TLabel;
     PaintBox1: TPaintBox;
@@ -39,7 +38,6 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure chb_paintClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure se_radiusChange(Sender: TObject);
     procedure PaintBox1MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -68,58 +66,6 @@ implementation
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
-//var
-  //R1, R2: TRect;
-  //i: Integer;
-  //p: Extended;
-begin
-  {R1.Left := Random(1024);
-  R1.Top := Random(1024);
-  R1.Width := 200;
-  R1.Height := 200;
-
-  R2.Left := Random(1024);
-  R2.Top := Random(1024);
-  R2.Width := 200;
-  R2.Height := 200;
-
-  SW:=TStopwatch.StartNew;
-  SW.Start;
-
-  for i := 0 to 99999999 do
-    //if IntersectRect(R1, R2) then
-    //if (R1.Left+200 > R2.Left) and (R1.Left < R2.Left + 200)
-    //  and (R1.Top+200 > R2.Top) and (R1.Top < R2.Top+200) then
-    if (R1.Left > R2.Left) and (R1.Left < R2.Left)
-      and (R1.Top > R2.Top) and (R1.Top < R2.Top) then
-    //if max(abs(R1.Left-R2.Left),abs(R1.Top-R2.Top))<200 then
-    begin
-      Inc(p);
-    end;
-
-  SW.Stop;
-  ShowMessage(SW.Elapsed.TotalMilliseconds.ToString); }
-
-  {SW:=TStopwatch.StartNew;
-  SW.Start;
-
-  TParallel.For(0, 999999999, procedure(i: integer)
-    begin
-       //System.TMonitor.Enter(self);
-       try
-         p := i /4;
-       finally
-         //System.TMonitor.Exit(self);
-       end;
-    end
-   );
-
-  SW.Stop;
-  ShowMessage(SW.Elapsed.TotalMilliseconds.ToString);}
-
-end;
-
 procedure TForm1.Button2Click(Sender: TObject);
 var
   i: Integer;
@@ -129,7 +75,6 @@ begin
     i := 0;
     while i < BotList.Count do
     begin
-      //TBot(BotList[i]).Destroy;
       BotList[i].Destroy;
       Inc(i);
     end;
@@ -141,7 +86,6 @@ begin
     i := 0;
     while i < ResList.Count do
     begin
-      //TRes(ResList[i]).Destroy;
       ResList[i].Destroy;
       Inc(i);
     end;
@@ -161,7 +105,6 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  //DoubleBuffered := True;
   Randomize;
 
   PaintBox1.ControlStyle := PaintBox1.ControlStyle + [csOpaque];
@@ -213,14 +156,6 @@ end;
 
 procedure BotsPaint(bm: TBitMap);
 begin
-  {TParallel.For(0, Pred(BotList.Count),
-    procedure (i: Integer; loopState: TParallel.TLoopState)
-    begin
-      if i > BotList.Count then
-        loopState.Break;
-      BotList[i].Paint(bm.Canvas);                                              // прорисуем бота на холсте
-    end
-  ); }
   var i := 0;
   while i < BotList.Count do
   begin
@@ -304,39 +239,22 @@ procedure TForm1.ResStep;
 begin
   var i := 0;
   CountKing := 0;                                                               // будем считать королев, обнулимся
-  //TParallel.For(0, Pred(ResList.Count),
   while i < ResList.Count do
-  //procedure (i: Integer; loopState: TParallel.TLoopState)
   begin
-    //if i > ResList.Count then
-    //  loopState.Break;
 
     var Res := ResList[i];
     if Res.BodyWidth <= 3 then                                                  // если ресурс был съеден, уничтожаем его
     begin
       Res.Destroy;
-      //TThread.Queue(TThread.CurrentThread, procedure
-      //begin
       ResList.Delete(i);
-      //end);
       Continue;
-      //loopState.Break;
     end;
-  //end);
 
-  {TParallel.For(0, Pred(ResList.Count),
-  procedure (i: Integer)
-  begin }
-    //var Res := ResList[i];
-    //TThread.Queue(TThread.CurrentThread, procedure
-    //begin
     Res.Move(PaintBox1);                                                        // делаем шаг ресурсом (и королевой)
-    //end);
 
     if Res.ResType = tdKing then                                                // если это не ресурс, а королева
     begin
       Inc(CountKing);                                                           // сразу считаем сколько у нас королев
-      //TInterlocked.Increment(CountKing);
       if Res.ResCount > 1500 then                                               // если ресурсов у королевы достаточно
         if cnt_bot > CountBot {BotList.Count} then                              // а ботов меньше чем желательно для этой карты
         begin
@@ -352,18 +270,11 @@ begin
           // сразу вычисляем первый шаг бота, чтобы верно определить направление движения
           Bot.Left := Bot.Left - Round(Res.BodyWidth shr 1 * Cos(DegToRad(Bot.Direct +90)));
           Bot.Top := Bot.Top + Round(Res.BodyWidth shr 1 * Sin(DegToRad(Bot.Direct -90)));
-          //TThread.Queue(TThread.CurrentThread, procedure
-          //begin
           BotList.Add(Bot);                                                     // добавляем бота в коллекцию
           Dec(Res.ResCount, 20);                                                // отнимаем у королевы стоимость одного бота
-          //end);
         end;
     end;
-    //Res.Touch(ResList, Succ(i));
-    //TThread.Queue(TThread.CurrentThread, procedure
-    //begin
     Res.Touch(ResList, Succ(i));                                                // проверим на соприкосновение
-    //end);
     Inc(i);
   end; // while i < ResList.Count
 end;
@@ -404,18 +315,9 @@ begin
   var i := 0;
   CountBot := 0;
   while i < BotList.Count do
-  //TParallel.For(0, Pred(BotList.Count),
-  //procedure (i: Integer; loopState: TParallel.TLoopState)
   begin
-    //if i > BotList.Count then
-    //  loopState.Break;
-
     var Bot := BotList[i];
-
-    //TThread.Queue(TThread.CurrentThread, procedure
-    //begin
     Bot.Move(PaintBox1);                                                        // делаем шаг ботом (если жив)
-    //end);
 
     if Bot.Died then                                                            // если бот умер, удаляем запись о нем
     begin
@@ -429,17 +331,10 @@ begin
           Res2.Direct := Bot.Direct;
           Res2.ResType := tdKing;
           Res2.ResCount := GetCountResource(1500);                              // но это самая слабая королева, не умеет рожать
-          //TThread.Queue(TThread.CurrentThread, procedure
-          //begin
           ResList.Add(Res2);
-          //end);
         end;
         Bot.Destroy;
-        //BotList.Delete(i);
-        //TThread.Queue(TThread.CurrentThread, procedure
-        //begin
         BotList.Delete(i);
-        //end);
       end
       else
         Inc(i);
@@ -452,16 +347,12 @@ begin
     while j < ResList.Count do
     begin
       var Res := ResList[j];
-      //if IntersectRect(Bot.Rect, Res.Rect) then                               // проверяем не столкнулись ли мы с объектом
-      if (Bot.Left+Bot.Width > Res.Left) and (Bot.Left < Res.Left+Res.BodyWidth)
+      if (Bot.Left+Bot.Width > Res.Left) and (Bot.Left < Res.Left+Res.BodyWidth) // проверяем не столкнулись ли мы с объектом
           and (Bot.Top+Bot.Width > Res.Top) and (Bot.Top < Res.Top+Res.BodyWidth) then
         Bot.SetTarget(Res);
       Inc(j);
     end;
-    //TThread.Queue(TThread.CurrentThread, procedure
-    //begin
     Bot.Notify(BotList, Succ(i));                                               // кричим о состоянии своих счетчиков всем кто нас слышит
-    //end);
     Inc(i);
   end;
 end;
